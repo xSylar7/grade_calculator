@@ -5,12 +5,16 @@ void main() {
   runApp(const MyApp());
 }
 
-final controller = TextEditingController();
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +24,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final controller = TextEditingController();
+  String gradeResult = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +61,9 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 30),
                 ),
                 onPressed: () {
+                  setState(() {
+                    gradeResult;
+                  });
                   int? grade = int.tryParse(controller.text);
 
                   if (grade == null) {
@@ -60,19 +74,33 @@ class HomeScreen extends StatelessWidget {
                     print('grade cant be less than 0');
                   } else if (grade >= 90) {
                     print('A');
+                    gradeResult = ('A');
                   } else if (grade >= 80) {
                     print('B');
+                    gradeResult = ('B');
                   } else if (grade >= 70) {
                     print('C');
+                    gradeResult = ('C');
                   } else if (grade >= 60) {
                     print('D');
+                    gradeResult = ('D');
                   } else {
                     print('F');
+                    gradeResult = ('F');
                   }
                 },
-                style: ButtonStyle(),
               ),
-            )
+            ),
+            Container(
+              child: Text(
+                '$gradeResult',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 100,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ],
         ),
       ),
